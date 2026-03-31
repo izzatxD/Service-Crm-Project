@@ -1,0 +1,159 @@
+erDiagram
+    organizations ||--o{ branches : has
+    organizations ||--o{ staff_members : employs
+    organizations ||--o{ clients : owns
+    organizations ||--o{ service_categories : defines
+    organizations ||--o{ services : offers
+    organizations ||--o{ inventory_items : owns
+    organizations ||--o{ orders : receives
+    organizations ||--o{ expenses : records
+    organizations ||--o{ audit_logs : groups
+
+    users ||--o{ staff_members : maps_to
+    users ||--o{ audit_logs : acts_in
+
+    clients ||--o{ assets : owns
+    assets ||--|| vehicle_profiles : extends
+
+    service_categories ||--o{ services : groups
+
+    branches ||--o{ staff_members : hosts
+    branches ||--o{ inventory_items : stores
+    branches ||--o{ orders : handles
+    branches ||--o{ expenses : incurs
+
+    staff_members ||--o{ orders : creates
+    staff_members ||--o{ orders : manages
+    staff_members ||--o{ order_tasks : works_on
+    staff_members ||--o{ stock_movements : records
+    staff_members ||--o{ payments : receives
+    staff_members ||--o{ expenses : creates
+
+    clients ||--o{ orders : places
+    assets ||--o{ orders : serviced_in
+
+    orders ||--o{ order_tasks : contains
+    services ||--o{ order_tasks : catalog_item
+
+    order_tasks ||--o{ order_task_parts : consumes
+    inventory_items ||--o{ order_task_parts : used_in
+
+    inventory_items ||--o{ stock_movements : moves
+
+    orders ||--o{ payments : paid_by
+    orders ||--o| order_financials : snapshots
+    orders ||--o{ expenses : related_to
+
+    organizations {
+        uuid id PK
+        text name
+        enum business_type
+    }
+    branches {
+        uuid id PK
+        uuid organization_id FK
+        text name
+    }
+    users {
+        uuid id PK
+        bigint telegram_user_id
+        text phone
+        text email
+    }
+    staff_members {
+        uuid id PK
+        uuid organization_id FK
+        uuid branch_id FK
+        uuid user_id FK
+        enum role
+    }
+    clients {
+        uuid id PK
+        uuid organization_id FK
+        text full_name
+        text phone
+    }
+    assets {
+        uuid id PK
+        uuid organization_id FK
+        uuid client_id FK
+        enum asset_type
+        text display_name
+    }
+    vehicle_profiles {
+        uuid asset_id PK
+        text make
+        text model
+        text plate_number
+        text vin
+    }
+    service_categories {
+        uuid id PK
+        uuid organization_id FK
+        text name
+    }
+    services {
+        uuid id PK
+        uuid organization_id FK
+        uuid category_id FK
+        text name
+    }
+    orders {
+        uuid id PK
+        text order_number
+        uuid organization_id FK
+        uuid branch_id FK
+        uuid client_id FK
+        uuid asset_id FK
+    }
+    order_tasks {
+        uuid id PK
+        uuid order_id FK
+        uuid service_id FK
+        uuid assigned_worker_id FK
+        enum status
+    }
+    order_task_parts {
+        uuid id PK
+        uuid order_task_id FK
+        uuid inventory_item_id FK
+        numeric quantity
+    }
+    inventory_items {
+        uuid id PK
+        uuid organization_id FK
+        uuid branch_id FK
+        text sku
+        text name
+    }
+    stock_movements {
+        uuid id PK
+        uuid inventory_item_id FK
+        enum movement_type
+        numeric quantity
+    }
+    payments {
+        uuid id PK
+        uuid order_id FK
+        enum payment_method
+        numeric amount
+    }
+    expenses {
+        uuid id PK
+        uuid organization_id FK
+        uuid branch_id FK
+        uuid related_order_id FK
+        numeric amount
+    }
+    order_financials {
+        uuid id PK
+        uuid order_id FK
+        numeric grand_total
+    }
+    audit_logs {
+        uuid id PK
+        uuid organization_id FK
+        uuid user_id FK
+        text table_name
+        enum action
+    }

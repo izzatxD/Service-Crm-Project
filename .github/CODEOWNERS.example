@@ -1,0 +1,8 @@
+# Copy this file to `.github/CODEOWNERS` and replace placeholder owners.
+# Do not enable "Require review from Code Owners" until real owners are set.
+
+* @your-org/platform-team
+/backend/ @your-org/backend-team
+/frontend/ @your-org/frontend-team
+/.github/ @your-org/platform-team
+/*.md @your-org/platform-team

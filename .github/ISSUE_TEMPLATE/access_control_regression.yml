@@ -1,0 +1,76 @@
+name: Access control regression
+description: Report a permission, tenant isolation, or role-based access problem
+title: "[Access]: "
+labels:
+  - security
+  - access-control
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include secrets, passwords, tokens, or production customer data.
+
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Regression type
+      options:
+        - Cross-organization access
+        - Missing permission check
+        - Role escalation
+        - Read filter bypass
+        - Write action bypass
+        - Dashboard scope issue
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: actor
+    attributes:
+      label: Acting role or account
+      placeholder: manager / cashier / viewer / tenant admin
+    validations:
+      required: true
+
+  - type: input
+    id: target
+    attributes:
+      label: Target resource
+      placeholder: client, order, branch, payment, stock document
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      placeholder: |
+        1. Login as ...
+        2. Request GET /api/... or click ...
+        3. Observe unauthorized access
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected protection
+      placeholder: The request should return 403 or hide the action
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Risk / impact
+      placeholder: What could an attacker or normal user do because of this?
+    validations:
+      required: true
+
+  - type: textarea
+    id: regression_tests
+    attributes:
+      label: Related regression coverage
+      description: Mention affected tests or note if coverage is missing
+      placeholder: backend/test/security.e2e-spec.ts
