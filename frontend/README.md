@@ -36,3 +36,4 @@ Frontend CI currently runs:
 - Production build output is written to `dist/`
 - Frontend lint is expected to stay green together with backend security regressions
 - Demo role checks for UI permissions are documented in `../DEMO_ROLE_QA.md`
+- API-level demo smoke script is available at `../scripts/demo_role_smoke.ps1`

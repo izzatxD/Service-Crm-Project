@@ -50,6 +50,7 @@ Run manual smoke checks when UI, workflow, or permissions change:
 Checklist:
 
 - `DEMO_ROLE_QA.md`
+- `scripts/demo_role_smoke.ps1`
 
 ## Pull Requests
 
