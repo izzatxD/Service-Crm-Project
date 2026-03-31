@@ -92,3 +92,4 @@ Main API regression suite:
 Role-based demo checklist:
 
 - `DEMO_ROLE_QA.md`
+- `scripts/demo_role_smoke.ps1`
